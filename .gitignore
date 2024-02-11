@@ -1,0 +1,49 @@
+# Binaries
+bin/
+obj/
+
+# Visual Studio generated files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Tool cache folder
+/.tools
+
+# NUnit test results folder
+_testresults/
+
+# Test Results folder
+/TestResults
+
+# Build results folder
+/publish/
+
+# NuGet Packages folder
+/packages/
+
+# Visual Studio Backup Files
+*.bak
+
+# Rider-specific files
+.idea/
+
+# ReSharper cache folder
+_ReSharper*/
+
+# Rider cache folder
+.idea/
+
+# Rider generated .iml file
+*.sln.iml
+
+# Rider cache folder
+.rider/
+
+# Rider local configuration file
+.rider
+
+# Rider cache files folder
+.rider/
