@@ -1,4 +1,4 @@
-﻿using OperacionFuegoQuasar.Domain.Entities;
+﻿using OperacionFuegoQuasar.Domain.Repositories;
 using OperacionFuegoQuasar.Domain.Services;
 
 namespace OperacionFuegoQuasar.Application.Services;

@@ -1,4 +1,4 @@
-﻿namespace OperacionFuegoQuasar.Domain.Entities;
+﻿namespace OperacionFuegoQuasar.Domain.Repositories;
 public class ShipLocation
 {
     public float X { get; set; }

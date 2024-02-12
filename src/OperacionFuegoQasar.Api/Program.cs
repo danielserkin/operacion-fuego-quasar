@@ -1,6 +1,10 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using OperacionFuegoQuasar.Application.Services;
 using OperacionFuegoQuasar.Domain.Services;
+using OperacionFuegoQuasar.Infrastructure.Data;
+using OperacionFuegoQuasar.Domain.Repositories;
+using OperacionFuegoQuasar.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,13 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "OperacionFuegoQuasar API", Version = "v1" });
 });
+
+var configuration = builder.Configuration;
+var connectionString = configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+       options.UseSqlite(connectionString, b => b.MigrationsAssembly("OperacionFuegoQuasar.Infrastructure")));
+
+builder.Services.AddScoped<ISatelliteDataRepository, SatelliteDataRepository>();
 
 var app = builder.Build();
 
