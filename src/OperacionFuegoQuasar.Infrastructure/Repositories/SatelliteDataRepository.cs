@@ -1,5 +1,8 @@
-﻿using OperacionFuegoQuasar.Domain.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using OperacionFuegoQuasar.Domain.Entities;
+using OperacionFuegoQuasar.Domain.Repositories;
 using OperacionFuegoQuasar.Infrastructure.Data;
+
 namespace OperacionFuegoQuasar.Infrastructure.Repositories;
 
 public class SatelliteDataRepository : ISatelliteDataRepository
@@ -11,21 +14,12 @@ public class SatelliteDataRepository : ISatelliteDataRepository
         _context = context;
     }
 
-    public void Add(SatelliteData satelliteData)
+    public async Task AddAsync(SatelliteData satelliteData)
     {
-        satelliteData.Timestamp = DateTime.UtcNow;
         _context.SatelliteData.Add(satelliteData);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public (float[], string[][]) GetAllSatelliteData()
-    {
-        var satelliteData = _context.SatelliteData.ToList(); 
-
-        var distances = satelliteData.Select(s => s.Distance).ToArray();
-        var messages = satelliteData.Select(s => s.Message.Split(",")).ToArray();
-
-        return (distances, messages);
-    }
-
+    public async Task<IEnumerable<SatelliteData>> GetAllSatelliteDataAsync()
+        => await _context.SatelliteData.ToListAsync();
 }

@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen(c =>
 var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-       options.UseSqlite(connectionString, b => b.MigrationsAssembly("OperacionFuegoQuasar.Infrastructure")));
+       options.UseSqlite(connectionString));
 
 builder.Services.AddScoped<ISatelliteDataRepository, SatelliteDataRepository>();
 
