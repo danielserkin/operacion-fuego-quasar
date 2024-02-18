@@ -20,6 +20,18 @@ public class SatelliteDataRepository : ISatelliteDataRepository
         await _context.SaveChangesAsync();
     }
 
+    public async Task DeleteAllDataFromTablAsync()
+    {
+        // Get the DbSet representing the table
+        var tableEntities = _context.SatelliteData;
+
+        // Remove all entities from the DbSet
+        tableEntities.RemoveRange(tableEntities);
+
+        // Save the changes to the database
+        await _context.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<SatelliteData>> GetAllSatelliteDataAsync()
         => await _context.SatelliteData.ToListAsync();
 }

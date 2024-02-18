@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OperacionFuegoQasar.Api.Models;
+using OperacionFuegoQuasar.Aplication.Services;
+using OperacionFuegoQuasar.Application.Requests;
 using OperacionFuegoQuasar.Domain.Entities;
 using OperacionFuegoQuasar.Domain.Repositories;
-using OperacionFuegoQuasar.Domain.Services;
 
 namespace OperacionFuegoQuasar.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
 [Produces("application/json")]
 public class TopSecretController : ControllerBase
 {
@@ -20,16 +20,16 @@ public class TopSecretController : ControllerBase
         _shipService = shipService;
     }
 
-    [HttpPost]
+    [HttpPost("topsecret")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
-    public async Task<TopSecretDecoded> PostAsync(IEnumerable<SatelliteDataReceveid> satellites)
-        => await _shipService.DecodeTopSecretInfoAsync(satellites);
+    public async Task<TopSecretDecoded> PostAsync(TopSecret topSecret)
+        => await _shipService.DecodeTopSecretInfoAsync(topSecret);
 
     [HttpPost("topsecret_split/{satelliteName}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
-    public async Task Split(SatelliteDataReceveid satellieData) 
-        => await _satelliteDataRepository.AddAsync(new SatelliteData(satellieData.Name, satellieData.Distance, string.Join(",", satellieData.Message)));
+    public async Task Split(string satelliteName, TopSecretSplit topSecretSplit) 
+        => await _satelliteDataRepository.AddAsync(new SatelliteData(satelliteName, topSecretSplit.Distance, string.Join(",", topSecretSplit.Message)));
 
 }

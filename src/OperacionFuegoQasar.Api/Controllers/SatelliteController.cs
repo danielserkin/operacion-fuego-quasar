@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OperacionFuegoQasar.Api.Models;
+using OperacionFuegoQuasar.Aplication.Services;
+using OperacionFuegoQuasar.Application.Requests;
 using OperacionFuegoQuasar.Domain.Entities;
 using OperacionFuegoQuasar.Domain.Repositories;
-using OperacionFuegoQuasar.Domain.Services;
 
 namespace OperacionFuegoQasar.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("satelite")]
 [Produces("application/json")]
 public class SatelliteController : ControllerBase
 {
@@ -30,8 +31,8 @@ public class SatelliteController : ControllerBase
             .OrderByDescending(x => x.Id)
             .Take(3);
 
-        var satelliteDataModel =  satelliteDataFilter.Select(x => new SatelliteDataReceveid() { Name = x.Name, Distance = x.Distance, Message = x.Message.Split(",") });
+        var satelliteData =  satelliteDataFilter.Select(x => new Satellite() { Name = x.Name, Distance = x.Distance, Message = x.Message.Split(",") });
 
-        return await _shipService.DecodeTopSecretInfoAsync(satelliteDataModel);
+        return await _shipService.DecodeTopSecretInfoAsync(new TopSecret() { Satellites = satelliteData } );
 }
 }

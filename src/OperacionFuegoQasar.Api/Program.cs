@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using OperacionFuegoQuasar.Application.Services;
-using OperacionFuegoQuasar.Domain.Services;
 using OperacionFuegoQuasar.Infrastructure.Data;
 using OperacionFuegoQuasar.Domain.Repositories;
 using OperacionFuegoQuasar.Infrastructure.Repositories;
+using OperacionFuegoQuasar.Aplication.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

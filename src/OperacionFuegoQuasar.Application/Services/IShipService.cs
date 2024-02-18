@@ -1,10 +1,10 @@
 ﻿using OperacionFuegoQasar.Api.Models;
+using OperacionFuegoQuasar.Application.Requests;
 using OperacionFuegoQuasar.Domain.Entities;
-using OperacionFuegoQuasar.Domain.Repositories;
-namespace OperacionFuegoQuasar.Domain.Services;
+namespace OperacionFuegoQuasar.Aplication.Services;
 public interface IShipService
 {
     ShipLocation GetLocation(float[] distances);
     ShipMessage GetMessage(string[] messages);
-    Task<TopSecretDecoded> DecodeTopSecretInfoAsync(IEnumerable<SatelliteDataReceveid> satellites);
+    Task<TopSecretDecoded> DecodeTopSecretInfoAsync(TopSecret satellites);
 }

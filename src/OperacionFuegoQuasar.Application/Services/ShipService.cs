@@ -1,7 +1,8 @@
 ﻿using OperacionFuegoQasar.Api.Models;
+using OperacionFuegoQuasar.Aplication.Services;
+using OperacionFuegoQuasar.Application.Requests;
 using OperacionFuegoQuasar.Domain.Entities;
 using OperacionFuegoQuasar.Domain.Repositories;
-using OperacionFuegoQuasar.Domain.Services;
 
 namespace OperacionFuegoQuasar.Application.Services;
 public class ShipService : IShipService
@@ -17,12 +18,13 @@ public class ShipService : IShipService
     public ShipService(ISatelliteDataRepository satelliteDataRepository) 
         => _satelliteDataRepository = satelliteDataRepository ?? throw new ArgumentNullException(nameof(satelliteDataRepository));
 
-    public async Task<TopSecretDecoded> DecodeTopSecretInfoAsync(IEnumerable<SatelliteDataReceveid> satellites)
+    public async Task<TopSecretDecoded> DecodeTopSecretInfoAsync(TopSecret topSecret)
     {
-        if (satellites == null || satellites.Count() != 3)
+        if (topSecret.Satellites == null || topSecret.Satellites.Count() != 3)
             throw new ArgumentException("Exactly 3 satellites are required to determine the location and the message.");
 
-        foreach (var sateliteData in satellites.ToList())
+        await _satelliteDataRepository.DeleteAllDataFromTablAsync();
+        foreach (var sateliteData in topSecret.Satellites.ToList())
         {
             var sateliteDataNew = new SatelliteData(sateliteData.Name, sateliteData.Distance, string.Join(",", sateliteData.Message));
             await _satelliteDataRepository.AddAsync(sateliteDataNew);
@@ -39,9 +41,8 @@ public class ShipService : IShipService
     public ShipLocation GetLocation(float[] distances)
     {
         if (distances == null || distances.Length != 3)
-        {
             throw new ArgumentException("Se requieren exactamente 3 distancias para la triangulación.");
-        }
+        
 
         float d = 2 * (KenobiX * (SkywalkerY - SatoY) + SkywalkerX * (SatoY - KenobiY) + SatoX * (KenobiY - SkywalkerY));
         float px = (distances[0] * (SkywalkerY - SatoY) + distances[1] * (SatoY - KenobiY) + distances[2] * (KenobiY - SkywalkerY)) / d;
@@ -55,26 +56,21 @@ public class ShipService : IShipService
         if (messages.Length < 3)
             throw new ArgumentException("At least three messages are required to construct the final message.");
 
-
-        // Join all messages into a single string
-        string combinedMessage = string.Join(" ", messages);
-
-        // Split the combined string into words
-        string[] words = combinedMessage.Split(" ");
-
-        // Filter out empty or null words
-        string[] filteredWords = words.Where(word => !string.IsNullOrEmpty(word)).ToArray();
-
-        // Ensure that there are enough words to construct the final message
-        if (filteredWords.Length < 3)
+        var wordPositions = messages.Select((m, index) =>
         {
-            throw new InvalidOperationException("At least three non-empty words are required to construct the final message.");
-        }
+            var words = m.Split(',', StringSplitOptions.None)
+                         .Select((word, position) => (word.Trim(), position))
+                         .Where(wp => !string.IsNullOrEmpty(wp.Item1))
+                         .ToList();
+            return words;
+        });
 
-        // Join the filtered words into the final message
-        string finalMessage = string.Join(" ", filteredWords);
+        var uniqueWords = wordPositions
+            .SelectMany(list => list)
+            .OrderBy(wp => wp.position)
+            .Select(wp => wp.Item1)
+            .Distinct();
 
-
-        return new ShipMessage() { Message = finalMessage };
+        return new ShipMessage() { Message = string.Join(" ", uniqueWords) };
     }
 }
