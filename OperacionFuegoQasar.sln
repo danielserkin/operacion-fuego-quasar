@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperacionFuegoQuasar.Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperacionFuegoQuasar.Application", "src\OperacionFuegoQuasar.Application\OperacionFuegoQuasar.Application.csproj", "{FCE02628-6814-4DAD-90A9-ACFE1E09751D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperacionFuegoQuasar.Infrastructure", "src\OperacionFuegoQuasar.Infrastructure\OperacionFuegoQuasar.Infrastructure.csproj", "{8EEA938B-ED9E-4D7B-8839-9D7F2D0D13FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperacionFuegoQuasar.Infrastructure", "src\OperacionFuegoQuasar.Infrastructure\OperacionFuegoQuasar.Infrastructure.csproj", "{8EEA938B-ED9E-4D7B-8839-9D7F2D0D13FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3D758527-BFAA-4BDD-AB36-FE8442967B22}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperacionFuegoQasar.Api", "src\OperacionFuegoQasar.Api\OperacionFuegoQasar.Api.csproj", "{D1C3A50F-C9C2-4A7F-8B0F-7676EF7BD1F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperacionFuegoQuasar.Tests", "tests\OperacionFuegoQuasar.Tests\OperacionFuegoQuasar.Tests.csproj", "{C9883726-F060-41D1-8CE2-1309C5F72B99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aplication.Tests", "tests\Aplication.Tests\Aplication.Tests.csproj", "{AEFC3479-CF2C-4D45-8548-F8BA521A1CCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,10 @@ Global
 		{D1C3A50F-C9C2-4A7F-8B0F-7676EF7BD1F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1C3A50F-C9C2-4A7F-8B0F-7676EF7BD1F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1C3A50F-C9C2-4A7F-8B0F-7676EF7BD1F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9883726-F060-41D1-8CE2-1309C5F72B99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9883726-F060-41D1-8CE2-1309C5F72B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9883726-F060-41D1-8CE2-1309C5F72B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9883726-F060-41D1-8CE2-1309C5F72B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEFC3479-CF2C-4D45-8548-F8BA521A1CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEFC3479-CF2C-4D45-8548-F8BA521A1CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEFC3479-CF2C-4D45-8548-F8BA521A1CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEFC3479-CF2C-4D45-8548-F8BA521A1CCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,7 +52,7 @@ Global
 		{FCE02628-6814-4DAD-90A9-ACFE1E09751D} = {BFCC2FA6-F608-4BD5-BA34-88D938C18933}
 		{8EEA938B-ED9E-4D7B-8839-9D7F2D0D13FB} = {BFCC2FA6-F608-4BD5-BA34-88D938C18933}
 		{D1C3A50F-C9C2-4A7F-8B0F-7676EF7BD1F9} = {BFCC2FA6-F608-4BD5-BA34-88D938C18933}
-		{C9883726-F060-41D1-8CE2-1309C5F72B99} = {3D758527-BFAA-4BDD-AB36-FE8442967B22}
+		{AEFC3479-CF2C-4D45-8548-F8BA521A1CCC} = {3D758527-BFAA-4BDD-AB36-FE8442967B22}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3719B899-DFB0-4CB5-B6EB-D961B7466817}

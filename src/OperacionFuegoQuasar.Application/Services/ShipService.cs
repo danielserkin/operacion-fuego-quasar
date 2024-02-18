@@ -1,5 +1,6 @@
 ﻿using OperacionFuegoQasar.Api.Models;
 using OperacionFuegoQuasar.Aplication.Services;
+using OperacionFuegoQuasar.Application.Exceptions;
 using OperacionFuegoQuasar.Application.Requests;
 using OperacionFuegoQuasar.Domain.Entities;
 using OperacionFuegoQuasar.Domain.Repositories;
@@ -7,12 +8,12 @@ using OperacionFuegoQuasar.Domain.Repositories;
 namespace OperacionFuegoQuasar.Application.Services;
 public class ShipService : IShipService
 {
-    private const float KenobiX = -500;
-    private const float KenobiY = -200;
-    private const float SkywalkerX = 100;
-    private const float SkywalkerY = -100;
-    private const float SatoX = 500;
-    private const float SatoY = 100;
+    private const float KenobiX = -500f;
+    private const float KenobiY = -200f;
+    private const float SkywalkerX = 100f;
+    private const float SkywalkerY = -100f;
+    private const float SatoX = 500f;
+    private const float SatoY = 100f;
     private readonly ISatelliteDataRepository _satelliteDataRepository;
 
     public ShipService(ISatelliteDataRepository satelliteDataRepository) 
@@ -21,12 +22,12 @@ public class ShipService : IShipService
     public async Task<TopSecretDecoded> DecodeTopSecretInfoAsync(TopSecret topSecret)
     {
         if (topSecret.Satellites == null || topSecret.Satellites.Count() != 3)
-            throw new ArgumentException("Exactly 3 satellites are required to determine the location and the message.");
+            throw new InvalidNumbersOfSatellitesException();
 
         await _satelliteDataRepository.DeleteAllDataFromTablAsync();
         foreach (var sateliteData in topSecret.Satellites.ToList())
         {
-            var sateliteDataNew = new SatelliteData(sateliteData.Name, sateliteData.Distance, string.Join(",", sateliteData.Message));
+            var sateliteDataNew = new SatelliteData(sateliteData.Name, sateliteData.Distance, string.Join(",", sateliteData?.Message));
             await _satelliteDataRepository.AddAsync(sateliteDataNew);
         }
 
@@ -41,20 +42,30 @@ public class ShipService : IShipService
     public ShipLocation GetLocation(float[] distances)
     {
         if (distances == null || distances.Length != 3)
-            throw new ArgumentException("Se requieren exactamente 3 distancias para la triangulación.");
-        
+            throw new InvalidNumbersOfDistancesException();
 
-        float d = 2 * (KenobiX * (SkywalkerY - SatoY) + SkywalkerX * (SatoY - KenobiY) + SatoX * (KenobiY - SkywalkerY));
-        float px = (distances[0] * (SkywalkerY - SatoY) + distances[1] * (SatoY - KenobiY) + distances[2] * (KenobiY - SkywalkerY)) / d;
-        float py = (distances[0] * (SatoX - KenobiX) + distances[1] * (KenobiX - SkywalkerX) + distances[2] * (SkywalkerX - SatoX)) / d;
+        float d12 = distances[0] * distances[0];
+        float d22 = distances[1] * distances[1];
+        float d32 = distances[2] * distances[2];
 
-        return new ShipLocation { X = px, Y = py };
+        float X = (d12 - d22 + KenobiX * KenobiX) / (2 * KenobiX);
+
+ 
+        float Y = ((d12 - d32 + SkywalkerX * SkywalkerX + SatoX * SatoY) / (2 * SkywalkerY)) -
+                  (SkywalkerX / SkywalkerY) * X;
+
+
+        return new ShipLocation()
+        {
+            X = X,
+            Y = Y
+        };
     }
 
     public ShipMessage GetMessage(string[] messages)
     {
         if (messages.Length < 3)
-            throw new ArgumentException("At least three messages are required to construct the final message.");
+            throw new InvalidNumbersOfMessagesException();
 
         var wordPositions = messages.Select((m, index) =>
         {

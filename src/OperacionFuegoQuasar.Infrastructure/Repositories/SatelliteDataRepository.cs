@@ -16,22 +16,47 @@ public class SatelliteDataRepository : ISatelliteDataRepository
 
     public async Task AddAsync(SatelliteData satelliteData)
     {
-        _context.SatelliteData.Add(satelliteData);
-        await _context.SaveChangesAsync();
+        try
+        {
+            _context.SatelliteData.Add(satelliteData);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            throw new Exceptions.DbOperationException();
+        }
+       
     }
 
     public async Task DeleteAllDataFromTablAsync()
     {
-        // Get the DbSet representing the table
-        var tableEntities = _context.SatelliteData;
+        try
+        {
+            // Get the DbSet representing the table
+            var tableEntities = _context.SatelliteData;
 
-        // Remove all entities from the DbSet
-        tableEntities.RemoveRange(tableEntities);
+            // Remove all entities from the DbSet
+            tableEntities.RemoveRange(tableEntities);
 
-        // Save the changes to the database
-        await _context.SaveChangesAsync();
+            // Save the changes to the database
+            await _context.SaveChangesAsync();
+
+        }
+        catch (Exception)
+        {
+            throw new Exceptions.DbOperationException();
+        }
     }
 
     public async Task<IEnumerable<SatelliteData>> GetAllSatelliteDataAsync()
-        => await _context.SatelliteData.ToListAsync();
+    {
+        try
+        {
+            return await _context.SatelliteData.ToListAsync();
+        }
+        catch (Exception)
+        {
+            throw new Exceptions.DbOperationException();
+        }
+    }
 }
