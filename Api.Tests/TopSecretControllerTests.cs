@@ -33,7 +33,7 @@ public class TopSecretControllerTests
 
         // Assert
         Assert.IsNotNull(result);
-        Assert.IsInstanceOf<TopSecretDecoded>(result);
+        Assert.IsInstanceOf<ActionResult<TopSecretDecoded>>(result);
     }
 
 

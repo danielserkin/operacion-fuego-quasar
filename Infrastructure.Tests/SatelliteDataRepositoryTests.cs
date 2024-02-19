@@ -11,51 +11,7 @@ namespace Infrastructure.Tests;
 
 [TestFixture]
 public class SatelliteDataRepositoryTests
-{
-    [Test(Description = "Given valid satellite data, " +
-                   "When adding data to the repository, " +
-                   "Then it should be added to the database.")]
-    public async Task AddAsync_WithValidData_AddsToDatabase()
-    {
-        // Arrange
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
-            .Options;
-
-        using (var context = new ApplicationDbContext(options))
-        {
-            var repository = new SatelliteDataRepository(context);
-            var satelliteData = new SatelliteData("Kenobi", 100, "este,es,un,mensaje,secreto");
-
-            // Act
-            await repository.AddAsync(satelliteData);
-
-            // Assert
-            Assert.AreEqual(1, context.SatelliteData.Count());
-        }
-    }
-
-    [Test(Description = "Given no data in the repository, " +
-                   "When trying to retrieve all satellite data, " +
-                   "Then it should return an empty list.")]
-    public async Task GetAllSatelliteDataAsync_WithNoData_ReturnsEmptyList()
-    {
-        // Arrange
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
-            .Options;
-
-        using (var context = new ApplicationDbContext(options))
-        {
-            var repository = new SatelliteDataRepository(context);
-
-            // Act
-            var satelliteData = await repository.GetAllSatelliteDataAsync();
-
-            // Assert
-            Assert.IsEmpty(satelliteData);
-        }
-    }
+{   
 
     [Test(Description = "Given data in the repository, " +
                    "When trying to delete all satellite data, " +
@@ -90,6 +46,29 @@ public class SatelliteDataRepositoryTests
             // Assert
             // Ensure that all data has been removed from the database
             Assert.AreEqual(0, context.SatelliteData.Count());
+        }
+    }
+
+    [Test(Description = "Given valid satellite data, " +
+                  "When adding data to the repository, " +
+                  "Then it should be added to the database.")]
+    public async Task AddAsync_WithValidData_AddsToDatabase()
+    {
+        // Arrange
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .Options;
+
+        using (var context = new ApplicationDbContext(options))
+        {
+            var repository = new SatelliteDataRepository(context);
+            var satelliteData = new SatelliteData("Kenobi", 100, "este,es,un,mensaje,secreto");
+
+            // Act
+            await repository.AddAsync(satelliteData);
+
+            // Assert
+            Assert.AreEqual(1, context.SatelliteData.Count());
         }
     }
 
@@ -136,7 +115,7 @@ public class SatelliteDataRepositoryTests
     {
         // Arrange
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .UseInMemoryDatabase(databaseName: "TestDatabase2")
             .Options;
 
         // Create the repository with the in-memory database context
@@ -148,7 +127,6 @@ public class SatelliteDataRepositoryTests
             var result = await repository.GetAllSatelliteDataAsync();
 
             // Assert
-            // Ensure that an empty collection is returned when there is no data in the database
             Assert.IsEmpty(result);
         }
     }
