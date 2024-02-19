@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\OperacionFuegoQuasar.Infrastructure\OperacionFuegoQuasar.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\OperacionFuegoQuasar.Infrastructure\OperacionFuegoQuasar.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

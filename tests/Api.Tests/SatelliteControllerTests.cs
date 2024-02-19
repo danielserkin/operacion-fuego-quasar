@@ -1,17 +1,11 @@
-﻿using NUnit.Framework;
-using Moq;
+﻿using Moq;
 using OperacionFuegoQuasar.Api.Controllers;
 using OperacionFuegoQuasar.Domain.Entities;
 using OperacionFuegoQuasar.Domain.Repositories;
 using OperacionFuegoQuasar.Aplication.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using OperacionFuegoQasar.Api.Controllers;
 using OperacionFuegoQasar.Api.Models;
 using OperacionFuegoQuasar.Application.Requests;
-using Microsoft.AspNetCore.Mvc;
 using OperacionFuegoQuasar.Application.Exceptions;
 
 namespace Api.Tests;

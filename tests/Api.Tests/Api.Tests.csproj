@@ -19,9 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\OperacionFuegoQasar.Api\OperacionFuegoQasar.Api.csproj" />
-    <ProjectReference Include="..\src\OperacionFuegoQuasar.Application\OperacionFuegoQuasar.Application.csproj" />
-    <ProjectReference Include="..\src\OperacionFuegoQuasar.Domain\OperacionFuegoQuasar.Domain.csproj" />
+    <ProjectReference Include="..\..\src\OperacionFuegoQasar.Api\OperacionFuegoQasar.Api.csproj" />
+    <ProjectReference Include="..\..\src\OperacionFuegoQuasar.Application\OperacionFuegoQuasar.Application.csproj" />
+    <ProjectReference Include="..\..\src\OperacionFuegoQuasar.Domain\OperacionFuegoQuasar.Domain.csproj" />
   </ItemGroup>
 
 </Project>
