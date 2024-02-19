@@ -31,8 +31,9 @@ public class SatelliteController : ControllerBase
             .OrderByDescending(x => x.Id)
             .Take(3);
 
-        var satelliteData =  satelliteDataFilter.Select(x => new Satellite() { Name = x.Name, Distance = x.Distance, Message = x.Message.Split(",") });
+        var satelliteData = satelliteDataFilter.Select(x => new Satellite() { Name = x.Name, Distance = x.Distance, Message = x.Message.Split(",") });
 
-        return await _shipService.DecodeTopSecretInfoAsync(new TopSecret() { Satellites = satelliteData } );
-}
+        return await _shipService.DecodeTopSecretInfoAsync(new TopSecret() { Satellites = satelliteData });
+
+    }
 }

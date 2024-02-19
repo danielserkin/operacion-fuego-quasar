@@ -1,8 +1,6 @@
 ﻿using Moq;
-using OperacionFuegoQuasar.Application.Exceptions;
 using OperacionFuegoQuasar.Application.Requests;
 using OperacionFuegoQuasar.Domain.Repositories;
-using OperacionFuegoQuasar.Application.Services;
 using OperacionFuegoQuasar.Domain.Entities;
 using OperacionFuegoQuasar.Aplication.Services;
 using OperacionFuegoQasar.Api.Models;
