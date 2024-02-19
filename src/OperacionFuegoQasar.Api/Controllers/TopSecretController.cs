@@ -20,11 +20,20 @@ public class TopSecretController : ControllerBase
         _shipService = shipService;
     }
 
+
     [HttpPost("topsecret")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
-    public async Task<TopSecretDecoded> PostAsync(TopSecret topSecret)
-        => await _shipService.DecodeTopSecretInfoAsync(topSecret);
+    public async Task<ActionResult<TopSecretDecoded>> PostAsync(TopSecret topSecret)
+    {
+        if (topSecret.Satellites != null)
+        {
+            var decodedInfo = await _shipService.DecodeTopSecretInfoAsync(topSecret);
+            return Ok(decodedInfo);
+        }
+
+        return BadRequest();
+    }
 
     [HttpPost("topsecret_split/{satelliteName}")]
     [ProducesResponseType(200)]

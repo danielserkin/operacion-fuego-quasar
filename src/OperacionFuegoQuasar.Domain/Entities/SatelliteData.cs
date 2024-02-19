@@ -4,6 +4,9 @@ namespace OperacionFuegoQuasar.Domain.Entities;
 
 public class SatelliteData
 {
+    public SatelliteData()
+    {
+    }
     public SatelliteData(string name, float distance, string message)
     {
         Name = name;

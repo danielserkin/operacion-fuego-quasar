@@ -21,13 +21,12 @@ public class ShipService : IShipService
 
     public async Task<TopSecretDecoded> DecodeTopSecretInfoAsync(TopSecret topSecret)
     {
-        if (topSecret.Satellites == null || topSecret.Satellites.Count() != 3)
-            throw new InvalidNumbersOfSatellitesException();
+        ValidateRequest(topSecret);
 
         await _satelliteDataRepository.DeleteAllDataFromTablAsync();
         foreach (var sateliteData in topSecret.Satellites.ToList())
         {
-            var sateliteDataNew = new SatelliteData(sateliteData.Name, sateliteData.Distance, string.Join(",", sateliteData?.Message));
+            var sateliteDataNew = new SatelliteData(sateliteData.Name, sateliteData.Distance, string.Join(",", sateliteData.Message));
             await _satelliteDataRepository.AddAsync(sateliteDataNew);
         }
 
@@ -37,6 +36,18 @@ public class ShipService : IShipService
         var message = GetMessage(allSatelliteData.Select(x => x.Message).ToArray());
 
         return new TopSecretDecoded { Location = location, Message = message };
+    }
+
+    private void ValidateRequest(TopSecret topSecret)
+    {
+        if (topSecret.Satellites == null || topSecret.Satellites.Count() != 3)
+            throw new InvalidNumbersOfSatellitesException();
+
+        if (topSecret.Satellites.Any(x => x.Message == null || string.Join("",x.Message) == string.Empty))
+            throw new IncorrectMessageException();
+
+        if (topSecret.Satellites.Any(x => x.Distance == 0))
+            throw new InvalidDistanceException();
     }
 
     public ShipLocation GetLocation(float[] distances)
