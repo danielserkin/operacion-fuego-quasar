@@ -1,4 +1,4 @@
-﻿{
+{
   "profiles": {
     "OperacionFuegoQuasar.Api": {
       "commandName": "Project",
@@ -6,6 +6,12 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true
     }
   }
 }
